@@ -1,0 +1,100 @@
+---
+interface Props{
+  url:string;
+  og_title?:string;
+  og_description?:string;
+  og_url?:string;
+  og_image?:string;
+}
+
+const { url,og_title,og_description,og_url,og_image }=Astro.props;
+const has_ogp=og_description||og_image||og_title||og_url;
+const proxyurl=`https://corsproxy.io/?${encodeURIComponent(url)}`;
+const response=await fetch(proxyurl).then(r=>r.text());
+const meta=Array.from(response.matchAll(/<[^>]*meta[^>]+og:[^>]+>/g)).map(r=>r.filter(f=>f.includes('meta')));
+const ogp=has_ogp?{
+  "og:title":og_title,
+  "og:description":og_description,
+  "og:url":og_url,
+  "og:image":og_image
+}:Object.fromEntries(
+  meta.map(m=>{
+    const text_regx=/"([^"])+"/;
+    const property=m[0].match(/property[ ]*=[ ]*"[^( |")]*og:[^( |")]+"/)![0].match(text_regx)![0].replaceAll("\"","");
+    const content=m[0].match(/content[ ]*=[ ]*"[^"]+"/)![0].match(text_regx)![0].replaceAll("\"","");
+    return [
+      property,
+      content
+    ]
+  })
+);
+---
+
+<a href={url} class="card">
+  <div class="card-text">
+    <h3 class="card-title">{ogp["og:title"]?ogp["og:title"]:url}</h3>
+    {ogp["og:description"]?<p class="card-desc">{ogp["og:description"]}</p>:null}
+    <p class="card-origin">{(ogp["og:url"]||url).match(/\/[^\/]+\//)![0].replaceAll("/","")}</p>
+  </div>
+  {ogp["og:image"]==null||ogp["og:image"]==""?null:<img class="card-img" src={ogp["og:image"]} alt="image" />}
+</a>
+
+<style>
+.card{
+  width: 90%;
+  height: 122px;
+  display: flex;
+  justify-content: end;
+  text-decoration: none;
+  background-color: #fff;
+  color: #333;
+  border-radius: 10px;
+  border-color: #3333;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.card-text{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: .8rem 1.2rem;
+}
+
+.card-title{
+  margin: 0;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.card-desc{
+  margin: 0.2rem 0rem;
+  color: #777;
+  flex-grow: 1;
+  font-size: 0.85rem;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.card-origin{
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.card-img{
+  width: auto;
+  border-radius: 0 10px 10px 0;
+  object-fit: cover;
+}
+
+@media (max-width: 950px) {
+  .card-img{
+    width: max(40%,122px);
+  }
+}
+</style>

@@ -1,0 +1,108 @@
+---
+import { BASE_URL } from "../consts";
+import Home from "../layouts/Home.astro";
+
+const articles=await Astro.glob("./blog/*");
+// let t_articles:any[]=[];
+// for(let i=0;i<10;i++){
+//   const a={
+//     url:"/",
+//     frontmatter:{
+//       title:"クソデカ羅生門",
+//       description:"ある日の超暮方(ほぼ夜)の事である。一人の下人が、クソデカい羅生門の完全な真下で雨やみを気持ち悪いほどずっと待ちまくっていた。",
+//       image:""
+//     }
+//   };
+//   a.frontmatter.image=`https://picsum.photos/${Math.ceil(Math.random()*3)*100}/${Math.ceil(Math.random()*3)*100}`
+//   t_articles.push(a);
+// }
+---
+
+<Home og_url={BASE_URL+'works/'} og_image="/img/Works.avif" og_locale="ja_JP" og_site_name="六甲学院物理部2024" og_title="Works | 作品" og_description="文化祭で展示する作品などの記事を掲載している場所です。" og_type="website">
+  <div id="container">
+    <div id="grid">
+      {
+        articles.map(a=>{
+          return <div class="grid-content">
+            <a href={a.url+"/"}>
+              <img src={a.frontmatter.image} alt={a.frontmatter.title} />
+              <div class="masonry-text">
+                <h4>{a.frontmatter.title}</h4>
+                <p>{a.frontmatter.description}</p>
+              </div>
+            </a>
+          </div>
+        })
+      }
+    </div>
+  </div>
+</Home>
+
+<style>
+#container{
+  background-color: #eee;
+  padding-inline: 1rem;
+  padding-block: 2rem;
+  min-height: calc(100vh - 4rem);
+}
+
+#grid{
+  width: 100%;
+}
+
+.grid-content{
+  width: 22%;
+  margin-bottom: 2.5rem;
+  background-color: #fcfcfc;
+  box-shadow: 0 0 5px #0002;
+  border-radius: 5px;
+  transition: all 0.5s  cubic-bezier(0.16, 1, 0.3, 1);
+  @media (max-width: 1421px) {
+    width: 30%;
+  }
+  @media (max-width: 1153px) {
+    width: 47%;
+  }
+  @media (max-width: 966px) {
+    width: 97%;
+  }
+  a{
+    text-decoration: none;
+    &:hover{
+      text-decoration: underline dotted #2065a1;
+    }
+  }
+  img{
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .masonry-text{
+    padding: 1rem;
+  }
+  h4{
+    color: #333;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-block: 0.5rem;
+  }
+  p{
+    font-size: 0.85rem;
+    color: #777;
+    margin-block: 0.1rem;
+  }
+}
+</style>
+
+<script>
+const i=await import("../scripts/masonry.pkgd.min.js");
+let msnry=new i.Masonry('#grid',{
+  itemSelector: '.grid-content',
+  gutter: 40
+});
+window.addEventListener('load',()=>{
+  msnry=new i.Masonry('#grid',{
+    itemSelector: '.grid-content',
+    gutter: 40
+  });
+});
+</script>

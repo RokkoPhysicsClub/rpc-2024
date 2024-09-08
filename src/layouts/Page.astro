@@ -1,0 +1,47 @@
+---
+import Home from "../layouts/Home.astro";
+---
+
+<Home>
+  <div id="container">
+    <slot/>
+  </div>
+</Home>
+
+<style>
+#container{
+  background-color: #f8f8f8;
+  padding-inline: 1rem;
+  padding-block: 2rem;
+  min-height: calc(100vh - 4rem);
+}
+</style>
+
+<style is:global>
+h1{
+  font-weight: 400;
+}
+
+thead{
+  background-color: #ccc;
+}
+
+tbody{
+  tr{
+    &:nth-child(2n){
+      background-color: #ccc;
+    }
+    &:nth-child(2n+1){
+      background-color: #e2e2e2;
+    }
+    td{
+      padding-inline: 1rem;
+      padding-block: 0.1rem;
+    }
+  }
+}
+
+img{
+  width: 100%;
+}
+</style>
