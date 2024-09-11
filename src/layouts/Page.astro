@@ -1,9 +1,14 @@
 ---
 import Home from "../layouts/Home.astro";
+
+const title=Astro.props.frontmatter.title;
+const author=Astro.props.frontmatter.author;
 ---
 
 <Home>
   <div id="container">
+    {title?<h1 class="title">{title}</h1>:null}
+    {author?<p class="author">{"by "+author}</p>:null}
     <slot/>
   </div>
 </Home>
@@ -14,6 +19,11 @@ import Home from "../layouts/Home.astro";
   padding-inline: 1rem;
   padding-block: 2rem;
   min-height: calc(100vh - 4rem);
+}
+
+.author{
+  text-align: right;
+  font-size: 1.3rem;
 }
 </style>
 
@@ -42,6 +52,25 @@ tbody{
 }
 
 img{
-  width: 100%;
+  max-width: 100%;
+  max-height: 50vh;
+}
+
+code{
+  padding: 0.2rem;
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+pre{
+  width: min(640px,100%);
+  display: flex;
+  overflow-x: auto;
+  border-radius: 5px;
+  background-color: #112 !important;
+  code{
+    padding: 1.1rem;
+    background-color: #112;
+  }
 }
 </style>

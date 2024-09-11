@@ -2,7 +2,7 @@
 import { BASE_URL } from "../consts";
 import Home from "../layouts/Home.astro";
 
-const articles=await Astro.glob("./blog/*");
+const articles=await Astro.glob("./works/*");
 // let t_articles:any[]=[];
 // for(let i=0;i<10;i++){
 //   const a={
@@ -52,7 +52,6 @@ const articles=await Astro.glob("./blog/*");
 
 .grid-content{
   width: 22%;
-  margin-bottom: 2.5rem;
   background-color: #fcfcfc;
   box-shadow: 0 0 5px #0002;
   border-radius: 5px;
@@ -70,11 +69,15 @@ const articles=await Astro.glob("./blog/*");
     text-decoration: none;
     &:hover{
       text-decoration: underline dotted #2065a1;
+      img{
+        filter: opacity(50%);
+      }
     }
   }
   img{
     max-width: 100%;
     box-sizing: border-box;
+    transition: filter 0.25s ease-out;
   }
   .masonry-text{
     padding: 1rem;
@@ -94,15 +97,55 @@ const articles=await Astro.glob("./blog/*");
 </style>
 
 <script>
-const i=await import("../scripts/masonry.pkgd.min.js");
-let msnry=new i.Masonry('#grid',{
-  itemSelector: '.grid-content',
-  gutter: 40
-});
+const parent=document.getElementById("grid")!;
+const targets=Array.from(parent!.children)as HTMLElement[];
+
+let heights:number[]=[];
+let min_width=250;
+let gap=40;
+let lines=4;
+
+layout();
 window.addEventListener('load',()=>{
-  msnry=new i.Masonry('#grid',{
-    itemSelector: '.grid-content',
-    gutter: 40
-  });
+  layout();
 });
+window.addEventListener('resize',()=>{
+  layout();
+});
+
+function layout(){
+  const parent_width=parent.clientWidth;
+  lines=Math.floor(parent_width/(min_width+gap));
+  heights=[...Array(lines)].map((a,i)=>0);
+  const base_width=(parent_width-gap*lines)/lines;
+  targets.forEach((e,i,a)=>{
+    const data=getShortest();
+    e.style.position="absolute";
+    e.style.left=`${parent.offsetLeft+gap*0.5+(base_width+gap)*data.index}px`;
+    e.style.top=`${parent.offsetTop+gap*0.5+heights[data.index]}px`;
+    e.style.width=`${base_width}px`;
+    heights[data.index]+=e.clientHeight+gap;
+  });
+  parent.style.height=`${getHeight()}px`;
+}
+
+function getShortest(){
+  let r=1e50;
+  let idx=0;
+  heights.forEach((h,i,a)=>{
+    if(r>h){
+      r=h;
+      idx=i;
+    }
+  });
+  return {height:r,index:idx};
+}
+
+function getHeight(){
+  let max=0;
+  heights.forEach(h=>{
+    if(max<h)max=h;
+  });
+  return max;
+}
 </script>

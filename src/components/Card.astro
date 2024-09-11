@@ -7,10 +7,16 @@ interface Props{
   og_image?:string;
 }
 
-const { url,og_title,og_description,og_url,og_image }=Astro.props;
-const has_ogp=og_description||og_image||og_title||og_url;
+let { url,og_title,og_description,og_url,og_image }=Astro.props;
+let has_ogp=(og_description||og_image||og_title||og_url)?true:false;
 const proxyurl=`https://corsproxy.io/?${encodeURIComponent(url)}`;
 const response=await fetch(proxyurl).then(r=>r.text());
+if(!response){
+  has_ogp=true;
+  og_title=url;
+  og_url=url;
+
+}
 const meta=Array.from(response.matchAll(/<[^>]*meta[^>]+og:[^>]+>/g)).map(r=>r.filter(f=>f.includes('meta')));
 const ogp=has_ogp?{
   "og:title":og_title,
