@@ -3,6 +3,193 @@ layout: "../../layouts/Page.astro"
 image: "/img/Re_Simple_shooting/Re_Simple_shooting.avif"
 title: "Re:Simple_shooting"
 description: "シンプルなシューティングゲームのリメイク版"
-author: "0x4C"
+author: "83rd 0x4C"
 ---
+import Card from "../../components/Card.astro";
 
+人生で初めて製作したゲームをリメイクしました。
+
+↓Re:Simple_shootingのリンク
+<Card url="https://asynchronous-0x4c.github.io/Re_Simple_shooting/" />
+
+↓Simple_shootingのリンク
+<Card url="https://asynchronous-0x4c.github.io/Simple_shooting_on_web/" />
+
+## 概要
+- ソースコード: 綺麗
+- 開発人数: 1人
+- 開発期間: 2か月程度
+
+![Re:Simple_shooting](/img/Re_Simple_shooting/Re_Simple_shooting.avif)
+
+## 遊び方
+主に上から流れてくる敵を倒すだけです。
+
+一応クリア条件が存在するものの、現時点ではそれほど重要ではないです。
+
+## 実装に関して
+このゲームの実装にあたって、様々な工夫を行いました。
+
+### Webとネイティブの同時開発
+今回は、開発初期からWebでもプレイできるように工夫しました。
+
+具体的には、
+1. Processingで開発
+2. ProcessingのソースコードをProcessing.jsを用いてJavaScriptから実行
+
+という流れで制作することにより、随時デバッグをしながらWebとネイティブの両方に対応したソースコードを書きました。
+
+ちなみに、この手法で開発をすると様々な制約が付き、例えば
+```java
+ArrayList<String>list;//これはエラー
+ArrayList<String> list;//これはOK
+```
+というような、結構理不尽なエラーに見舞われたりします。
+
+そんなに苦労するぐらいならHaxeを使え?<br/>
+ﾁｮｯﾄﾅﾆｲｯﾃﾙｶﾜｶﾗﾅｲｯｽﾈ。
+
+### Webアプリケーション化
+今回はWebアプリケーション(PWA)に挑戦してみました。
+
+Webアプリケーションというのは、普通のアプリケーションがOS上で動いているのに対し、Webブラウザ上でアプリケーションを動かすことで様々なOSに対応したアプリケーションにしようというものです。<br/>
+つまるところ、一度プログラムが完成すればPCでもスマホでも学校のiPadでも動きます。
+
+それに加えて、PWAはたとえインターネットにつながっていない状態でも、一度でもアクセスしたことがあるのであれば動きます。<br/>
+なので、学校のiPadに入れればインターネットに接続できない帰り道や電車の中でも遊べます。<br/>
+ちなみに、オフライン対応をした動機は、シンガポール・マレーシア研修で飛行機に乗る際にゲームで遊びたかったからです。
+
+具体的な実装は以下のようになります。(オフラインについては次節で説明)<br/>
+まず、webページの`<head>`内に以下の内容を記述
+```html
+<link rel="manifest" href="./manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+```
+`manifest.json`を以下のように記述
+```json
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name":"サイト名",
+  "short_name":"サイト名(省略)",
+  "background_color":"背景色",
+  "theme_color": "モバイル端末の上側のバーの色",
+  "icons":[
+    {
+      "src": "./favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "index.hmtlの場所",
+  "scope": "Webサイトの場所",
+  "display": "standalone"
+}
+```
+こうすることで、Webサイトをホーム画面に追加する際、インストールができるようになります。
+
+### オフライン対応
+PWAにおいて、ゲームのオフライン対応は結構難しかったりします。<br/>
+というのも、オフライン対応のために利用する`Cache API`というものがなかなかの曲者で、`XMLHttpRequest`をキャッシュする条件が分からなかったり、キャッシュするファイルを指定する際に迂闊に`cache.addAll()`を使おうものなら大量のファイルのパスを全て間違いなく記載する羽目になったりするからです。
+
+まあとりあえず実装を見ていきましょう。<br/>
+まず、`index.html`に以下のスクリプトを追加します
+```javascript
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(function(registration) {
+    console.log('Service Worker registered with scope:', registration.scope);
+    registration.update();
+  }).catch(function(error) {
+    console.log('Service Worker registration failed:', error);
+  });
+}
+```
+これにより、`Cache API`を利用するための`Service Worker`を登録します。<br/>
+`Service Worker`側のソースコードは以下のようになります。
+```javascript
+const CACHE_VERSION='rssc-v1';
+const DISP_VERSION='rssc-d-v1';
+const resources=[
+  "キャッシュしたいファイルへの相対パスたち"
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    //Service Workerがインストールされたら、キャッシュしたいファイルを登録する。
+    //addAll()は1つでも存在しないファイルが指定されている場合に使えないので、add()で代用するのがおすすめ。
+    caches.open(CACHE_VERSION).then(cache => resources.forEach(r=>cache.add(r)))
+  );
+  event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener('fetch', event => {//fetch()を使うと呼び出される。XMLHttpRequestは呼び出されたり呼び出されなかったり。
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        return response || fetch(event.request)//キャッシュがある場合はキャッシュを使用、ない場合はfetch()で取ってくる
+          .then(networkResponse => {
+            return caches.open(CACHE_VERSION)
+              .then(cache => {
+                if(event.request.url.includes('http'))cache.put(event.request, networkResponse.clone());
+                return networkResponse;//fetch()で取ってきたデータをキャッシュ
+              });
+          });
+      })
+  );
+});
+
+self.addEventListener('activate',(e)=>{//起動時にキャッシュを更新する。
+  const cacheWhitelist = [CACHE_VERSION];
+  e.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});
+```
+ここまでを実装することで、**通常のサイトであれば**晴れてオフラインに対応することができます。
+
+### XMLHttpRequestとの闘い
+Processing.jsはXMLHttpRequestを使います。
+
+え?よく聞こえなかった?<br/>
+ならもう一度言います。
+
+**Processing.jsはXMLHttpRequestを使います。**<br/>
+**そして、XMLHttpRequestを使うということは、ゲームで使うデータをキャッシュできないということを意味します。**
+
+つまり、**最大の敵は他でもないProcessing.js**ということです。<br/>
+現状、ProcessingのスケッチをJavaScriptに変換できるのはProcessing.jsのみなので、この問題を避けて通ることはできません。
+
+### XMLHttpRequestとの闘い(解決編)
+いくら避けようがないとは言え、解決策はあります。
+
+具体的には、
+1. Processingでのみ読み込む.pdeファイルを作成
+2. 作成したファイル内にファイル読み込み関数を作成
+3. Webで読み込むJavaScriptファイルを作成
+4. JavaScript側にも同じ名前のファイル読み込み関数を作成。このとき、`fetch()`を使う。
+というようにするとXMLHttpRequestからfetchに移行することができます。
+
+ソースコードは下記のリンクの`JSONManager`や`loadJSONObjectAsync()`を参照すれば分かります。
+<Card url="https://github.com/Asynchronous-0x4C/Re_Simple_shooting/blob/20a7b8b9979d332c7c40d64bbbd6d2398f5ef549/Wrapper.pde#L176" />
+
+<Card url="https://github.com/Asynchronous-0x4C/Re_Simple_shooting/blob/20a7b8b9979d332c7c40d64bbbd6d2398f5ef549/js/wrapper.js#L23" />
+
+## さいごに
+PWAについて書こうと思ったらなかなかな長文になってしまいました。<br/>
+もはやここまで読む人は誰も居ないと思いますが、ゲームを遊んでいただけると幸いです。
+
+では。

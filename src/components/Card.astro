@@ -10,8 +10,11 @@ interface Props{
 let { url,og_title,og_description,og_url,og_image }=Astro.props;
 let has_ogp=(og_description||og_image||og_title||og_url)?true:false;
 const proxyurl=`https://corsproxy.io/?${encodeURIComponent(url)}`;
-const response=await fetch(proxyurl).then(r=>r.text());
-if(!response){
+let response="";
+try{
+  response=await fetch(proxyurl).then(r=>r.text());
+}catch(_){}
+if(!response&&!has_ogp){
   has_ogp=true;
   og_title=url;
   og_url=url;
@@ -58,10 +61,12 @@ const ogp=has_ogp?{
   border-color: #3333;
   border-style: solid;
   border-width: 1px;
+  margin-block: 1rem;
 }
 
 .card-text{
   flex-grow: 1;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;

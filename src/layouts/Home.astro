@@ -1,6 +1,6 @@
 ---
 import Sidebar from "../components/Sidebar.astro";
-import { SITE_TITLE ,SITE_DESCRIPTION, SITE_MENU, SITE_CREDIT } from "../consts";
+import { SITE_TITLE ,SITE_DESCRIPTION, SITE_MENU, SITE_CREDIT , TRACKING_ID } from "../consts";
 
 interface Props{
   og_site_name?:string;
@@ -16,7 +16,7 @@ const { og_site_name,og_title,og_description,og_url,og_image,og_type,og_locale }
 const has_ogp:boolean=og_site_name||og_title||og_description||og_url||og_image||og_type||og_locale?true:false;
 ---
 
-<head prefix={has_ogp?"og: https://ogp.me/ns#":""}>
+<head prefix={has_ogp?"og: https://ogp.me/ns#":""} data-TrackingID={TRACKING_ID}>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta lang="ja">
@@ -27,11 +27,20 @@ const has_ogp:boolean=og_site_name||og_title||og_description||og_url||og_image||
   {og_site_name?<meta property="og:site_name" content={og_site_name} />:null}
   {og_description?<meta property="og:description" content={og_description} />:null}
   {og_locale?<meta property="og:locale" content={og_locale} />:null}
+  {has_ogp?<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:site" content="@RokkoPhysics" />:null}
   <title>{SITE_TITLE}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
   <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
+  <script async src={`https://www.googletagmanager.com/gtag/js?id=${TRACKING_ID}`}></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', document.head.dataset.TrackingID);
+  </script>
 </head>
 <body>
   <div id="main-wrapper">
@@ -108,6 +117,9 @@ body{
 }
 
 #content-wrapper{
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
   width: calc(75% - 2rem);
   flex-grow: 1;
 }
