@@ -10,6 +10,7 @@ export default defineConfig({
     site: BASE_URL,
     integrations: [mdx(), relativeLinks()],
     build:{
-      format:"directory"
-    }
+      format:"directory"      
+    },
+    outDir:"./docs"
 });

@@ -1,0 +1,87 @@
+<!DOCTYPE html><head prefix="og: https://ogp.me/ns#" data-TrackingID="G-3JYL5JSD3F"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"><meta lang="ja"><meta property="og:url" content="https://rokkophysicsclub.github.io/rpc-2024/works/pathtracing/"><meta property="og:type" content="website"><meta property="og:title" content="Real-time Path Tracing"><meta property="og:image" content="https://rokkophysicsclub.github.io/rpc-2024/img/Works.avif"><meta property="og:site_name" content="六甲学院物理部2024"><meta property="og:description" content="リアルタイムなパストレーシング"><meta property="og:locale" content="https://rokkophysicsclub.github.io/rpc-2024/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@RokkoPhysics"><title>六甲学院物理部2024</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet"><link rel="icon" href="../../favicon.svg" sizes="any" type="image/svg+xml"><script async src="https://www.googletagmanager.com/gtag/js?id=G-3JYL5JSD3F"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', document.head.dataset.TrackingID);
+  </script><link rel="stylesheet" href="../../_astro/about.DDtlOBCY.css">
+<style>.card[data-astro-cid-dohjnao5]{width:90%;height:122px;display:flex;justify-content:end;text-decoration:none;background-color:#fff;color:#333;border-radius:10px;border-color:#3333;border-style:solid;border-width:1px;margin-block:1rem}.card-text[data-astro-cid-dohjnao5]{flex-grow:1;width:50%;display:flex;flex-direction:column;justify-content:center;padding:.8rem 1.2rem}.card-title[data-astro-cid-dohjnao5]{margin:0;display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:1}.card-desc[data-astro-cid-dohjnao5]{margin:.2rem 0rem;color:#777;flex-grow:1;font-size:.85rem;display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}.card-origin[data-astro-cid-dohjnao5]{margin:0;font-size:.85rem}.card-img[data-astro-cid-dohjnao5]{width:auto;border-radius:0 10px 10px 0;object-fit:cover}@media (max-width: 950px){.card-img[data-astro-cid-dohjnao5]{width:max(40%,122px)}}
+</style><script type="module" src="../../_astro/hoisted.DA_UdhYa.js"></script></head> <body data-astro-cid-k74dcqyt> <div id="main-wrapper" data-astro-cid-k74dcqyt> <div id="sidebar-wrapper" data-astro-cid-k74dcqyt> <div id="title-container" data-astro-cid-ssfzsv2f> <h1 id="title" data-astro-cid-ssfzsv2f><a href="../../" data-astro-cid-ssfzsv2f>六甲学院物理部2024</a></h1> <p id="title-desc" data-astro-cid-ssfzsv2f>六甲学院物理部の2024年度オンライン文化祭サイトです。（学校非公式）</p> <ul class="menu" data-astro-cid-ssfzsv2f> <li data-astro-cid-ssfzsv2f><a href="../../" style="" data-astro-cid-ssfzsv2f>Welcome</a></li><li data-astro-cid-ssfzsv2f><a href="../../works/index.html" style="" data-astro-cid-ssfzsv2f>Works</a></li><li data-astro-cid-ssfzsv2f><a href="../../links/index.html" style="" data-astro-cid-ssfzsv2f>Links</a></li><li data-astro-cid-ssfzsv2f><a href="../../about/index.html" style="" data-astro-cid-ssfzsv2f>About</a></li> </ul> <div id="social" data-astro-cid-ssfzsv2f> <a class="sns-icon" href="https://x.com/RokkoPhysics" data-astro-cid-ssfzsv2f><img src="../../img/x-twitter.svg" alt="icon" data-astro-cid-ssfzsv2f></a><a class="sns-icon" href="https://github.com/RokkoPhysicsClub" data-astro-cid-ssfzsv2f><img src="../../img/github.svg" alt="icon" data-astro-cid-ssfzsv2f></a><a class="sns-icon" href="https://www.youtube.com/channel/UCvLDGaFKdbpQ7vELdrUSyCw" data-astro-cid-ssfzsv2f><img src="../../img/youtube.svg" alt="icon" data-astro-cid-ssfzsv2f></a><a class="sns-icon" href="https://sp.nicovideo.jp/user/88466335" data-astro-cid-ssfzsv2f><img src="../../img/niconico.svg" alt="icon" data-astro-cid-ssfzsv2f></a> </div> <p id="credit" data-astro-cid-ssfzsv2f>©2024 六甲学院物理部</p> </div>  </div> <div id="content-wrapper" data-astro-cid-k74dcqyt> <button id="menu-button" onclick="document.getElementById('sidebar-wrapper').classList.toggle('active');this.classList.toggle('active')" data-astro-cid-k74dcqyt> <img src="../../img/bars.svg" alt="bar" data-astro-cid-k74dcqyt>
+Menu
+</button>  <div id="container" data-astro-cid-qo5xhe7c> <h1 class="title" id="real-time-path-tracing" data-astro-cid-qo5xhe7c>Real-time Path Tracing</h1> <p class="author" data-astro-cid-qo5xhe7c>83rd 0x4C</p> <div id="slot" data-astro-cid-qo5xhe7c> <p>去年に続きパストレーシングをOpenGLでリアルタイムに実行する</p>
+<h2 id="自己紹介">自己紹介</h2>
+<ul>
+<li>名前: 0x4C</li>
+<li>役職: 副部長</li>
+<li>やってること: ゲーム制作、3Dモデリング、レンダラー作成など</li>
+</ul>
+<h2 id="成果物">成果物</h2>
+<p><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">複合BSDFのウェイトを適切に調整しただけで収束が2倍ぐらい早くなった。 <a href="https://t.co/3iNcmvvEV2">pic.twitter.com/3iNcmvvEV2</a></p>— 0x4C (@async0x4c) <a href="https://twitter.com/async0x4c/status/1829087547064209464?ref_src=twsrc%5Etfw">August 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+ソースコードはGitHubで公開しています(可読性放棄)。</p>
+<a href="https://github.com/Asynchronous-0x4C/SSRenderer" class="card" data-astro-cid-dohjnao5> <div class="card-text" data-astro-cid-dohjnao5> <h3 class="card-title" data-astro-cid-dohjnao5>GitHub - Asynchronous-0x4C/SSRenderer</h3> <p class="card-desc" data-astro-cid-dohjnao5>Contribute to Asynchronous-0x4C/SSRenderer development by creating an account on GitHub.</p> <p class="card-origin" data-astro-cid-dohjnao5>github.com</p> </div> <img class="card-img" src="https://opengraph.githubassets.com/bb5fb49882e032097f910504170106ea0ad9493be001c86fba34ced2296112af/Asynchronous-0x4C/SSRenderer" alt="image" data-astro-cid-dohjnao5> </a> 
+<h2 id="パストレーシングとは">パストレーシングとは</h2>
+<p>いきなりパストレーシングと言われても知っている人は皆無だと思うので、パストレーシングとは何なのかについて説明します。</p>
+<p>パストレーシングについて説明するといったものの、前段階としてレイトレーシングについて知る必要があるので、まずはレイトレーシングについてです。</p>
+<h3 id="レイトレーシング">レイトレーシング</h3>
+<p>レイトレーシングというのは、光線をたどることで光の動きをシミュレートし、反射や屈折といった現象を再現するための手法です。</p>
+<p>PS5などで最近流行りのレイトレーシングも、内部では膨大な量の光線を処理して正しい影や反射の像などを求めています。</p>
+<blockquote>
+<p>Wikipediaより引用</p>
+<p><img src="../../img/PathTracing/RT.avif" alt="レイトレーシング"/></p>
+</blockquote>
+<h3 id="パストレーシング">パストレーシング</h3>
+<p>先ほど紹介したレイトレーシングは、光の経路自体は正しいものの、色の着き方まで正しく再現されているわけではありません。</p>
+<p>それに対しパストレーシングは、確率的に光の経路を選択したり、専用の色の計算モデルを使うことで光の経路のみならず色まで正確に計算するという手法です。<br/>
+色に関連する処理が追加される分、リアルタイムで動作させるのは(現在の環境では)非常に難しいです。</p>
+<p><img src="../../img/PathTracing/PT.avif" alt="パストレーシング"/></p>
+<h2 id="制作するに至った経緯">制作するに至った経緯</h2>
+<p>実は、Path Tracerを作ったと言いつつ元はラスタライザー(軽量な描画手法)を作るつもりでした。</p>
+<p>一応下の画像のようなシーンをレンダリングできるまでは制作しました。
+<img src="../../img/PathTracing/Rasterizer.avif" alt="ラスタライザー"/></p>
+<p>ただ、昨年まで学んでいたレイトレーシングの知識とラスタライザー制作で磨いた技術を使えば高速にパストレーシングできるのでは?<br/>
+と思ったので全てを放り出してパストレーサーを作りました。</p>
+<h2 id="実装">実装</h2>
+<h3 id="bsdf">BSDF</h3>
+<p>パストレーシングにおいて、正確な色を計算するためには専用の計算モデルが必要になります。</p>
+<p>その計算モデルが<code>BSDF(双方向散乱分布関数)</code>というものです。</p>
+<p><code>BSDF</code>はさらに2つのものに分かれており、それぞれ</p>
+<ul>
+<li>反射による色を計算する<code>BRDF</code></li>
+<li>屈折による色を計算する<code>BTDF</code></li>
+</ul>
+<p>というもので、<code>BSDF</code>はこれらの合計値になります。</p>
+<p>この中でも<code>BRDF</code>はさらに2つのものに分かれ、それぞれ</p>
+<ul>
+<li>拡散反射を表す<code>Diffuse BRDF</code></li>
+<li>鏡面反射を表す<code>Specular BRDF</code></li>
+</ul>
+<p>となります。(一応<code>BTDF</code>もSpecularとDiffuseに分けられますが、今回は実装していないので省略します。)</p>
+<h3 id="確率と重要度サンプリング">確率と重要度サンプリング</h3>
+<p>皆さんは小中学校で「光の入射角と反射角は等しい」と習ったと思いますが、現実にはほとんどの物質が様々な方向に光を反射します。<br/>
+「じゃあ入射角と反射角が等しいというのは成り立たないじゃないか」と思うかもしれませんが、そう見えるのは物体を<span style="color:red">マクロ</span>に捉えているからです。</p>
+<p>というのも、我々の目は物体の<span style="color:red">ミクロ</span>な部分で発生した「入射角と反射角が等しい」反射を積分しているため、あたかも「様々な方向に光が反射している」ように見えるのです。</p>
+<p>それを計算機上で再現するために、確率を使います。</p>
+<p>具体的には、確率を用いて面の向きを決定し、次の光線の向きを求めます。<br/>
+このとき、面の向きはそれぞれの<code>BSDF</code>に対応して分布が決まっており、例えば鏡のような滑らかな物質であればほぼすべての面が同じ向きに、錆びた鉄のような粗い物質であればばらばらな向きに分布します。<br/>
+なので、鏡のような物質で適当に面の向きを決定した場合、本来あり得ない方向に光線を飛ばしてしまうことになります。</p>
+<p>そこで、<code>重要度サンプリング</code>というものを使います。</p>
+<p><code>重要度サンプリング</code>というのは、面の向きの分布に添うように偏った方向に面の向きを決定するというものです。<br/>
+これにより、より早くシミュレーションの結果が収束するようになります。</p>
+<h3 id="bvh">BVH</h3>
+<p>レイトレーシングやパストレーシングにおいては、光線と物体の交差判定を高速化するために<code>BVH</code>というデータ構造を使います。<br/>
+<code>BVH</code>は基本的に二分木のような構造を取りますが、派生版として四分木の<code>QBVH</code>や八分木版の<code>OBVH</code>が存在します。<br/>
+部誌執筆時点では普通のBVHを実装しています。</p>
+<p>BVHを実装するとどれぐらい早くなるのかというと、<code>n</code>個のポリゴンを処理する時間が<code>n</code>から<code>log(n)</code>(底は2)まで早くなります。めっちゃはやい。</p>
+<h3 id="temporal-accumulation">Temporal Accumulation</h3>
+<p>パストレーシングでは最終的な結果を出すためにサンプルを蓄積する必要があるのですが、カメラが動いてしまうと蓄積をやり直すことになります。<br/>
+なので、<code>motion vector</code>という形で画面上のピクセルの動きを追跡し、カメラが動いても蓄積を続ける<code>Temporal Accumulation</code>を実装しました。(ただしどこかを間違えている)</p>
+<p>この手法を発展させることで<code>SVGF</code>というフィルタリングが使えるようになったりします。</p>
+<h2 id="画像たち">画像たち</h2>
+<p><img src="../../img/PathTracing/P1.avif" alt="1"/>
+<img src="../../img/PathTracing/P2.avif" alt="2"/>
+<img src="../../img/PathTracing/P3.avif" alt="3"/>
+<img src="../../img/PathTracing/P4.avif" alt="4"/></p>
+<h2 id="さいごに">さいごに</h2>
+<p>昨年の経験を活かし、今年は約1週間ほどでパストレーシングを実装することができたものの、9月に入ると思っていたより時間が無く、あまり発展させることができませんでした。</p>
+<p>とはいえBVHやTemporal Accumulationといった、前から実装したかった機能を実装することができたので、その点は満足です。</p>
+<p>多分文化祭後にも少し開発を進めると思うので、良かったら見てください。</p> </div> </div> <div id="heading-list" data-astro-cid-qo5xhe7c> <div id="heading-container" data-astro-cid-qo5xhe7c> <div class="heading-box" data-astro-cid-qo5xhe7c> <h2 id="author-box" data-astro-cid-qo5xhe7c>83rd 0x4C</h2> </div> <div class="heading-box" id="box-sticky" data-astro-cid-qo5xhe7c> <ol class="ol-depth-1" data-astro-cid-qo5xhe7c> <li data-astro-cid-qo5xhe7c> <a href="#real-time-path-tracing" id="anchor-real-time-path-tracing" data-astro-cid-qo5xhe7c> Real-time Path Tracing </a>  </li><li data-astro-cid-qo5xhe7c> <a href="#自己紹介" id="anchor-自己紹介" data-astro-cid-qo5xhe7c> 自己紹介 </a>  </li><li data-astro-cid-qo5xhe7c> <a href="#成果物" id="anchor-成果物" data-astro-cid-qo5xhe7c> 成果物 </a>  </li><li data-astro-cid-qo5xhe7c> <a href="#パストレーシングとは" id="anchor-パストレーシングとは" data-astro-cid-qo5xhe7c> パストレーシングとは </a> <ol class="ol-depth-2" data-astro-cid-qo5xhe7c><li data-astro-cid-qo5xhe7c> <a href="#レイトレーシング" id="anchor-レイトレーシング" data-astro-cid-qo5xhe7c>レイトレーシング</a> </li><li data-astro-cid-qo5xhe7c> <a href="#パストレーシング" id="anchor-パストレーシング" data-astro-cid-qo5xhe7c>パストレーシング</a> </li></ol> </li><li data-astro-cid-qo5xhe7c> <a href="#制作するに至った経緯" id="anchor-制作するに至った経緯" data-astro-cid-qo5xhe7c> 制作するに至った経緯 </a>  </li><li data-astro-cid-qo5xhe7c> <a href="#実装" id="anchor-実装" data-astro-cid-qo5xhe7c> 実装 </a> <ol class="ol-depth-2" data-astro-cid-qo5xhe7c><li data-astro-cid-qo5xhe7c> <a href="#bsdf" id="anchor-bsdf" data-astro-cid-qo5xhe7c>BSDF</a> </li><li data-astro-cid-qo5xhe7c> <a href="#確率と重要度サンプリング" id="anchor-確率と重要度サンプリング" data-astro-cid-qo5xhe7c>確率と重要度サンプリング</a> </li><li data-astro-cid-qo5xhe7c> <a href="#bvh" id="anchor-bvh" data-astro-cid-qo5xhe7c>BVH</a> </li><li data-astro-cid-qo5xhe7c> <a href="#temporal-accumulation" id="anchor-temporal-accumulation" data-astro-cid-qo5xhe7c>Temporal Accumulation</a> </li></ol> </li><li data-astro-cid-qo5xhe7c> <a href="#画像たち" id="anchor-画像たち" data-astro-cid-qo5xhe7c> 画像たち </a>  </li><li data-astro-cid-qo5xhe7c> <a href="#さいごに" id="anchor-さいごに" data-astro-cid-qo5xhe7c> さいごに </a>  </li> </ol> </div> </div> </div> </div> </div> </body>   
