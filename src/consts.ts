@@ -1,7 +1,9 @@
 // Place any global data in this file.
 // You can import this data from anywhere in your site by using the `import` keyword.
 
-export const BASE_URL= 'https://rokkophysicsclub.github.io/rpc-2024/';
+export const SITE = 'https://rokkophysicsclub.github.io';
+export const BASE = '/rpc-2024/';
+export const BASE_URL= SITE+BASE;
 export const SITE_TITLE = '六甲学院物理部2024';
 export const SITE_DESCRIPTION = '六甲学院物理部の2024年度オンライン文化祭サイトです。（学校非公式）';
 export const TRACKING_ID = 'G-3JYL5JSD3F';
