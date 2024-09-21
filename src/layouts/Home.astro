@@ -1,6 +1,6 @@
 ---
 import Sidebar from "../components/Sidebar.astro";
-import { SITE_TITLE ,SITE_DESCRIPTION, SITE_MENU, SITE_CREDIT , TRACKING_ID } from "../consts";
+import { SITE_TITLE ,SITE_DESCRIPTION, SITE_MENU, SITE_CREDIT , TRACKING_ID, BASE_URL } from "../consts";
 
 interface Props{
   og_site_name?:string;
@@ -22,12 +22,12 @@ const has_ogp:boolean=og_site_name||og_title||og_description||og_url||og_image||
   <meta lang="ja">
   {og_url?<meta property="og:url" content={og_url} />:null}
   {og_type?<meta property="og:type" content={og_type} />:null}
-  {og_title?<meta property="og:title" content={og_title} />:null}
-  {og_image?<meta property="og:image" content={og_image} />:null}
+  <meta property="og:title" content={og_title||SITE_TITLE} />
+  <meta property="og:image" content={og_image||BASE_URL+"img/RPC.png"} />
   {og_site_name?<meta property="og:site_name" content={og_site_name} />:null}
   {og_description?<meta property="og:description" content={og_description} />:null}
   {og_locale?<meta property="og:locale" content={og_locale} />:null}
-  {has_ogp?<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:site" content="@RokkoPhysics" />:null}
+  {has_ogp?<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={og_title} /><meta name="twitter:description" content={og_description||SITE_DESCRIPTION} /><meta name="twitter:image" content={og_image||BASE_URL+"img/RPC.png"} /><meta name="twitter:site" content="@RokkoPhysics" />:null}
   <title>{SITE_TITLE}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
