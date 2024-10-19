@@ -6,20 +6,28 @@ type heading={ depth: number;slug: string;text: string; };
 type heading_hierarchy={parent:heading,child:heading[]};
 const title=Astro.props.frontmatter.title;
 const author=Astro.props.frontmatter.author;
+//見出し一覧を取得
 const headings=Astro.props.headings;
+//ディレクトリから記事であるか判断
 const is_article=(/\/works\/.+/).test(Astro.url.href);
+
+//見出しの情報を加工する
 const heading_data=()=>{
+  //タイトルをルートとしてParent-Childの関係で木構造を構築
   const result=[{parent:{depth:1,slug:slugify(title),text:title},child:[]}]as heading_hierarchy[];
   headings.forEach((h: heading)=>{
     if(h.depth<3){
+      //大きな見出しは親として登録
       result.push({parent:h,child:[]});
     }else{
+      //小さな見出しは子として最後のインデックスの親に追加
       result[result.length-1].child.push(h);
     }
   });
   return result;
 };
 
+//見出しをSlug化(特殊な文字を含まない形式へ変換)する
 function slugify(str:string) {
   str = str.replace(/^\s+|\s+$/g, '');
   str = str.toLowerCase();
@@ -38,7 +46,7 @@ function slugify(str:string) {
       <slot/>
     </div>
   </div>
-  {
+  {//記事の場合、右側に見出し一覧を追加
     is_article?<div id="heading-list">
       <div id="heading-container">
         <div class="heading-box">
@@ -46,13 +54,13 @@ function slugify(str:string) {
         </div>
         <div class="heading-box" id="box-sticky">
           <ol class="ol-depth-1">
-            {
+            {//大きな見出しの情報を処理
               heading_data().map((h: heading_hierarchy)=>{
                 return <li>
                   <a href={`#${h.parent.slug}`} id={`anchor-${h.parent.slug}`}>
                     {h.parent.text}
                   </a>
-                  {
+                  {//小さな見出しを子として持つのであれば、処理する
                     h.child.length>0?<ol class="ol-depth-2">{
                       h.child.map((h:heading)=>{
                         return <li>
@@ -228,7 +236,9 @@ blockquote{
 </style>
 
 <script>
+//見出し一覧がある要素を取得
 const box=document.getElementById("box-sticky")!;
+//見出し名から見出しの要素を取得
 const anchors=box?Array.from(box.getElementsByTagName("a")):[];
 const headers:{e:HTMLElement,n:string}[]=[];
 anchors.forEach(a=>{
@@ -244,12 +254,14 @@ window.addEventListener('scroll',()=>{
   highlight();
 });
 
+//現在の画面上部の座標から良い感じに見出しをハイライトする
 function highlight(){
   let p=headers[0];
   let end=false;
+  const scroll=scrollY+scrollY/(document.body.clientHeight-window.innerHeight)*window.innerHeight;
   headers.forEach((h,i)=>{
     if(end)return;
-    if(h.e.offsetTop>scrollY){
+    if(h.e.offsetTop>scroll){
       anchor_map.forEach(a=>{
         if(a.n==p.n){
           a.e.style.color="#88f";

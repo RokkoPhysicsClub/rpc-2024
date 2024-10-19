@@ -102,16 +102,21 @@ const parent=document.getElementById("grid")!;
 const targets=Array.from(parent!.children)as HTMLElement[];
 
 let heights:number[]=[];
-let min_width=250;
+let min_width=260;
 let gap=40;
 let lines=4;
+let id:NodeJS.Timeout;
 
 layout();
+setTimeout(()=>layout(),250);
 window.addEventListener('load',()=>{
   layout();
+  
 });
 window.addEventListener('resize',()=>{
+  clearTimeout(id);
   layout();
+  id=setTimeout(layout,250);
 });
 
 function layout(){
@@ -125,13 +130,13 @@ function layout(){
     e.style.left=`${parent.offsetLeft+gap*0.5+(base_width+gap)*data.index}px`;
     e.style.top=`${parent.offsetTop+gap*0.5+heights[data.index]}px`;
     e.style.width=`${base_width}px`;
-    heights[data.index]+=e.clientHeight+gap;
+    heights[data.index]+=e.getBoundingClientRect().height+gap;
   });
   parent.style.height=`${getHeight()}px`;
 }
 
 function getShortest(){
-  let r=1e50;
+  let r=1e10;
   let idx=0;
   heights.forEach((h,i,a)=>{
     if(r>h){

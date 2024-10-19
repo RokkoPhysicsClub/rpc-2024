@@ -33,14 +33,17 @@ const has_ogp:boolean=og_site_name||og_title||og_description||og_url||og_image||
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="icon" sizes="48x48" href="/favicon.ico">
   <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
   <script async src={`https://www.googletagmanager.com/gtag/js?id=${TRACKING_ID}`}></script>
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', document.head.dataset.TrackingID);
+    gtag('config', document.head.dataset.trackingid);
   </script>
 </head>
 <body>
@@ -85,6 +88,8 @@ body{
   padding-inline: 15px;
   padding-block-start: 40px;
   background-color: #eee;
+  position: sticky;
+  top: -40px;
 }
 
 #menu-button{

@@ -14,36 +14,36 @@ export const SITE_MENU = [
   },
   {
     "name":"Works",
-    "link":"/works/index.html"
+    "link":"/works/"
   },
   {
     "name":"Links",
-    "link":"/links/index.html"
+    "link":"/links/"
   },
   {
     "name":"About",
-    "link":"/about/index.html"
+    "link":"/about/"
   }
 ];
 export const SOCIALS = [
   {
-    "icon":"/img/x-twitter.svg",
+    "icon":"/img/x-tw.svg",
     "link":"https://x.com/RokkoPhysics"
   },
   {
-    "icon":"/img/bluesky.svg",
+    "icon":"/img/bs.svg",
     "link":null
   },
   {
-    "icon":"/img/github.svg",
+    "icon":"/img/gh.svg",
     "link":"https://github.com/RokkoPhysicsClub"
   },
   {
-    "icon":"/img/youtube.svg",
+    "icon":"/img/yt.svg",
     "link":"https://www.youtube.com/channel/UCvLDGaFKdbpQ7vELdrUSyCw"
   },
   {
-    "icon":"/img/niconico.svg",
+    "icon":"/img/ncnc.svg",
     "link":"https://sp.nicovideo.jp/user/88466335"
   }
 ]

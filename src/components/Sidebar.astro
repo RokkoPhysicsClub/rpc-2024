@@ -1,5 +1,4 @@
 ---
-import { nullable } from 'astro:schema';
 import { SOCIALS } from '../consts';
 
 interface Navs{
@@ -14,7 +13,9 @@ interface Props{
   credit:string;
 }
 
-const { title,title_desc,links,credit }=Astro.props;
+const { title,title_desc,links,credit }=Astro.props;console.log(Astro.url.pathname);
+//正規表現でURLから"/works/"や"/links/"の部分だけを抜き出す
+const category=Astro.url.pathname.match(/\/[^\/]*\/?/)![0];
 ---
 
 <div id="title-container">
@@ -23,7 +24,7 @@ const { title,title_desc,links,credit }=Astro.props;
   <ul class="menu">
     {
       links.map(n=>
-        <li><a href={n.link} style={Astro.url.pathname==n.link?'color:#2065a1;':''}>{n.name}</a></li>
+        <li><span class="list-icon" style={n.link===category?'border-color:#2065a1;':''}></span><a href={n.link} style={n.link===category?'color:#2065a1;':''}>{n.name}</a></li>
       )
     }
   </ul>
@@ -58,7 +59,7 @@ const { title,title_desc,links,credit }=Astro.props;
       text-decoration: none;
       color: #555;
     }
-    &::before{
+    .list-icon{
       content: "";
       width: 0.5rem;
       height: 0.5rem;
