@@ -1,4 +1,5 @@
 ---
+import Tag from "../components/Tag.astro";
 import { BASE_URL, SITE_TITLE } from "../consts";
 import Home from "../layouts/Home.astro";
 
@@ -36,12 +37,25 @@ function slugify(str:string) {
            .replace(/-+/g, '-');
   return str;
 }
+
+//タグが定義されていれば取得。無ければ空になる。
+const tags:string[]=Astro.props.frontmatter.tags||[];
 ---
 
 <Home og_url={BASE_URL+(is_article?Astro.url.toString().match(/works\/.+/):"")} og_title={title} og_description={Astro.props.frontmatter.description} og_image={Astro.props.frontmatter.image?BASE_URL+Astro.props.frontmatter.image.substring(1):undefined} og_locale={BASE_URL} og_site_name={SITE_TITLE} og_type="website" >
   <div id="container">
     {title?<h1 class="title" id={slugify(title)}>{title}</h1>:null}
     {author?<p class="author">{author}</p>:null}
+    {
+      tags.length>0?
+      <div id="tag-list">
+        {
+          tags.map(t=>{
+            return <Tag text={t} onclick={(text)=>`window.location.assign("../../tags/?tag=${text}")`}></Tag>
+          })
+        }
+      </div>:null
+    }
     <div id="slot">
       <slot/>
     </div>
@@ -162,6 +176,13 @@ function slugify(str:string) {
       }
     }
   }
+}
+
+#tag-list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-block: 1.5rem;
 }
 </style>
 

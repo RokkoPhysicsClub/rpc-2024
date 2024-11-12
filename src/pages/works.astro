@@ -16,6 +16,38 @@ const articles=await Astro.glob("./works/*");
 //   a.frontmatter.image=`https://picsum.photos/${Math.ceil(Math.random()*3)*100}/${Math.ceil(Math.random()*3)*100}`
 //   t_articles.push(a);
 // }
+//型定義
+type article_data={link:string,title:string,description:string,image:string}
+type tag_map={name:string,articles:article_data[]};
+const json:Array<tag_map>=[];
+
+articles.forEach(a=>{
+  if(!a.frontmatter)return;
+  if(!a.frontmatter.tags)return;
+  (a.frontmatter.tags as string[]).forEach(t=>{
+    let exist=false;
+    json.forEach(j=>{
+      if(j.name==t){
+        j.articles.push(getArticleData(a));
+        exist=true;
+      }
+    });
+    if(!exist){
+      json.push({name:t,articles:[getArticleData(a)]});
+    }
+  });
+});
+
+function getArticleData(a:Record<string,any>):article_data{
+  return {
+    link:".."+a.url+"/",title:a.frontmatter.title,description:a.frontmatter.description,image:a.frontmatter.image!=null?".."+a.frontmatter.image:""
+  }
+}
+
+//devの時はエラーが出ててもいける
+//コメントアウトしたらビルドが通る
+// import * as fs from "fs";
+// fs.writeFileSync("./src/scripts/tags.json",JSON.stringify({tags:json}));
 ---
 
 <Home og_url={BASE_URL+'works/'} og_image="/img/Works.avif" og_locale="ja_JP" og_site_name="六甲学院物理部2024" og_title="Works | 作品" og_description="文化祭で展示する作品などの記事を掲載している場所です。" og_type="website">
@@ -105,7 +137,7 @@ let heights:number[]=[];
 let min_width=260;
 let gap=40;
 let lines=4;
-let id:NodeJS.Timeout;
+let id:number;
 
 layout();
 setTimeout(()=>layout(),250);
@@ -116,7 +148,7 @@ window.addEventListener('load',()=>{
 window.addEventListener('resize',()=>{
   clearTimeout(id);
   layout();
-  id=setTimeout(layout,250);
+  id=window.setTimeout(layout,250);
 });
 
 function layout(){
